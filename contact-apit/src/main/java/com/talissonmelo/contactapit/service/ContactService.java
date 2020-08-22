@@ -24,7 +24,7 @@ public class ContactService {
 		try {
 			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			throw new EntityNotFoundException("Contato de não encontrado!.");
+			throw new EntityNotFoundException("Contato não encontrado!.");
 		}
 	}
 
