@@ -2,6 +2,8 @@ package com.talissonmelo.contactapit.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.talissonmelo.contactapit.entity.Contact;
+import com.talissonmelo.contactapit.entity.dto.ContactDto;
 import com.talissonmelo.contactapit.repository.ContactRepository;
 import com.talissonmelo.contactapit.service.ContactService;
 
@@ -29,8 +32,8 @@ public class ContactController {
 	
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public Contact save(@RequestBody Contact contact) {
-		return service.save(contact);
+	public Contact save(@Valid @RequestBody ContactDto contactdto) {
+		return service.save(contactdto);
 	}
 	
 	@DeleteMapping(value = "/{id}")
