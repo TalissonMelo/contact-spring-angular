@@ -21,4 +21,12 @@ export class ContactService {
   findAll() : Observable<Contact[]> {
     return this.http.get<Contact[]>(this.url);
   }
+
+  favorite(id: number) : Observable<any> {
+    return this.http.patch<any>(`${this.url}/${id}/favorite` , null);
+  }
+
+  removeFavorite(id: number) : Observable<any> {
+    return this.http.patch<any>(`${this.url}/${id}/remove-favorite` , null);
+  }
 }

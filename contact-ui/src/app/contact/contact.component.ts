@@ -13,7 +13,7 @@ export class ContactComponent implements OnInit {
 
   form: FormGroup
   contacts: Contact[] = []
-  displayedColumns = ['id','name', 'email', 'phone', 'favorite']
+  displayedColumns = ['id', 'name', 'email', 'phone', 'favorite']
 
   constructor(private service: ContactService, private formBuilder: FormBuilder) { }
 
@@ -34,11 +34,26 @@ export class ContactComponent implements OnInit {
     })
   }
 
-  findAll(){
+  findAll() {
     this.service.findAll().subscribe(response => {
       this.contacts = response;
       console.log(response)
     })
   }
 
+  favorite(contact: any) {
+    if (contact.favorite) {
+      this.removeFavorite(contact);
+    } else {
+      this.service.favorite(contact.id).subscribe(response => {
+        this.findAll()
+      })
+    }
+  }
+
+  removeFavorite(contact: any) {
+    this.service.removeFavorite(contact.id).subscribe(response => {
+      this.findAll()
+    })
+  }
 }
