@@ -11,25 +11,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 })
 export class ContactComponent implements OnInit {
 
-  constructor(private service: ContactService, private formBuilder: FormBuilder) { }
-
   form: FormGroup
+  contacts: Contact[] = []
+
+  constructor(private service: ContactService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      name:['',Validators.required],
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['',Validators.required]
+      phone: ['', Validators.required]
     })
-
   }
 
   submit() {
-    
-    console.log(this.form.value)
-    /*this.service.insert().subscribe(response => {
-      console.log(response);
-    })*/
+    this.service.insert(this.form.value).subscribe(response => {
+      this.contacts.push(response)
+    })
   }
 
 }
