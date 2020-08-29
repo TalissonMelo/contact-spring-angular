@@ -1,19 +1,41 @@
 <mat-toolbar>Contatos</mat-toolbar>
 <form [formGroup]="form" (ngSubmit)="submit()">
+
     <mat-form-field class="full-width">
         <mat-label>Nome: *</mat-label>
         <input formControlName="name" matInput placeholder="Digite seu nome.">
     </mat-form-field>
+
+    <div *ngIf="form.controls.name.errors">
+        <div *ngIf="form.controls.name.errors.required">
+            <p>Campo nome e Obrigatório!.</p>
+        </div>
+    </div>
 
     <mat-form-field class="full-width">
         <mat-label>Email: *</mat-label>
         <input formControlName="email" matInput placeholder="Digite seu melhor e-mail.">
     </mat-form-field>
 
+    <div *ngIf="form.controls.email.errors">
+        <div *ngIf="form.controls.email.errors.required">
+            <p>Campo e-mail e Obrigatório!.</p>
+        </div>
+        <div *ngIf="form.controls.email.errors.email">
+            <p>Email invalido!.</p>
+        </div>
+    </div>
+
     <mat-form-field class="full-width">
         <mat-label>Telefone : *</mat-label>
         <input formControlName="phone" matInput placeholder="Digite o Telefone.">
     </mat-form-field>
 
-    <button mat-button color="primary">Adicionar</button>
+    <div *ngIf="form.controls.phone.errors">
+        <div *ngIf="form.controls.phone.errors.required">
+            <p>Campo telefone e Obrigatório!.</p>
+        </div>
+    </div>
+
+    <button [disabled]="!form.valid" mat-button color="primary">Adicionar</button>
 </form>
