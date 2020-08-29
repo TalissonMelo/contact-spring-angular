@@ -12,6 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ContactDto {
 	
+	private Long id;
+	
 	@NotBlank(message = "Campo nome e Obrigatório.")
 	private String name;
 
