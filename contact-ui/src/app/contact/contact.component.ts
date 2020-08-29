@@ -13,6 +13,7 @@ export class ContactComponent implements OnInit {
 
   form: FormGroup
   contacts: Contact[] = []
+  displayedColumns = ['id','name', 'email', 'phone', 'favorite']
 
   constructor(private service: ContactService, private formBuilder: FormBuilder) { }
 
