@@ -17,4 +17,8 @@ export class ContactService {
   insert(contact: Contact) : Observable<Contact> {
     return this.http.post<Contact>(this.url,contact );
   }
+
+  findAll() : Observable<Contact[]> {
+    return this.http.get<Contact[]>(this.url);
+  }
 }

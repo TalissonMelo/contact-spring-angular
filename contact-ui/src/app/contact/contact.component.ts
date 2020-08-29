@@ -18,6 +18,9 @@ export class ContactComponent implements OnInit {
   constructor(private service: ContactService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+
+    this.findAll();
+
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -28,6 +31,13 @@ export class ContactComponent implements OnInit {
   submit() {
     this.service.insert(this.form.value).subscribe(response => {
       this.contacts.push(response)
+    })
+  }
+
+  findAll(){
+    this.service.findAll().subscribe(response => {
+      this.contacts = response;
+      console.log(response)
     })
   }
 
