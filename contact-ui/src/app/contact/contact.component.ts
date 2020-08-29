@@ -15,7 +15,9 @@ export class ContactComponent implements OnInit {
   contacts: Contact[] = []
   displayedColumns = ['id', 'name', 'email', 'phone', 'favorite']
 
-  constructor(private service: ContactService, private formBuilder: FormBuilder) { }
+  constructor(private service: ContactService,
+              private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit(): void {
 
@@ -30,7 +32,8 @@ export class ContactComponent implements OnInit {
 
   submit() {
     this.service.insert(this.form.value).subscribe(response => {
-      this.contacts.push(response)
+    let list : Contact[] = [ ... this.contacts  , response]
+    this.contacts = list;
     })
   }
 
