@@ -40,7 +40,6 @@ export class ContactComponent implements OnInit {
   findAll() {
     this.service.findAll().subscribe(response => {
       this.contacts = response;
-      console.log(response)
     })
   }
 
