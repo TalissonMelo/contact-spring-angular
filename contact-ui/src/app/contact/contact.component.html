@@ -15,8 +15,13 @@
 
             <ng-container matColumnDef="photo">
                 <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let contact"> 
-                    <input type="file" name="photo" (change)="uploadPhoto($event, contact)" />
+                <td mat-cell *matCellDef="let contact">
+                    <div *ngIf="contact.photo">
+                        <img width="50" height="50" src="data:image/jpg;base64,{{ contact.photo }}" />
+                    </div>
+                    <div *ngIf="!contact.photo">
+                        <input type="file" name="photo" (change)="uploadPhoto($event, contact)" />
+                    </div>
                 </td>
             </ng-container>
 
