@@ -29,4 +29,8 @@ export class ContactService {
   removeFavorite(id: number) : Observable<any> {
     return this.http.patch<any>(`${this.url}/${id}/remove-favorite` , null);
   }
+
+  uploadPhoto(id: number, formData : FormData) :  Observable<any> {
+    return this.http.put(`${this.url}/${id}/photo`, formData);
+  }
 }

@@ -1,2 +1,1 @@
-alter table contact add photo bigint not null;
-update contact set photo = 1234567891011;
+alter table contact add photo VARBINARY(60000);

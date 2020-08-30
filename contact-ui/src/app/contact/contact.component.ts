@@ -13,10 +13,10 @@ export class ContactComponent implements OnInit {
 
   form: FormGroup
   contacts: Contact[] = []
-  displayedColumns = ['id', 'name', 'email', 'phone', 'favorite']
+  displayedColumns = ['photo', 'id', 'name', 'email', 'phone', 'favorite']
 
   constructor(private service: ContactService,
-              private formBuilder: FormBuilder
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -32,8 +32,9 @@ export class ContactComponent implements OnInit {
 
   submit() {
     this.service.insert(this.form.value).subscribe(response => {
-    let list : Contact[] = [ ... this.contacts  , response]
-    this.contacts = list;
+      let list: Contact[] = [... this.contacts, response]
+      this.contacts = list;
+      console.log(response)
     })
   }
 
@@ -57,5 +58,17 @@ export class ContactComponent implements OnInit {
     this.service.removeFavorite(contact.id).subscribe(response => {
       this.findAll()
     })
+  }
+
+  uploadPhoto(event, contact) {
+    const files = event.target.files;
+    if (files) {
+      const photo = files[0];
+      const formData: FormData = new FormData();
+      formData.append("photo", photo);
+      this.service.uploadPhoto(contact.id, formData).subscribe(response => {
+        this.findAll();
+      })
+    }
   }
 }
