@@ -5,6 +5,7 @@ import { ContactService } from '../contact.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
 import { ContactDetailsComponent } from '../contact-details/contact-details.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-contact',
@@ -16,6 +17,10 @@ export class ContactComponent implements OnInit {
   form: FormGroup
   contacts: Contact[] = []
   displayedColumns = ['photo', 'id', 'name', 'email', 'phone', 'favorite']
+  totalElements = 0;
+  page = 0;
+  size = 10;
+  pageSizeOptions : number[] = [10]
 
   constructor(private service: ContactService,
     private formBuilder: FormBuilder,
@@ -24,7 +29,7 @@ export class ContactComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.findAll();
+    this.findAll(this.page, this.size);
 
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
@@ -41,9 +46,11 @@ export class ContactComponent implements OnInit {
     })
   }
 
-  findAll() {
-    this.service.findAll().subscribe(response => {
-      this.contacts = response;
+  findAll(page,size) {
+    this.service.findAll(page,size).subscribe(response => {
+      this.contacts = response.content;
+      this.totalElements = response.totalElements;
+      this.page = response.number;
     })
   }
 
@@ -52,14 +59,14 @@ export class ContactComponent implements OnInit {
       this.removeFavorite(contact);
     } else {
       this.service.favorite(contact.id).subscribe(response => {
-        this.findAll()
+        this.findAll(this.page, this.size);
       })
     }
   }
 
   removeFavorite(contact: any) {
     this.service.removeFavorite(contact.id).subscribe(response => {
-      this.findAll()
+      this.findAll(this.page, this.size);
     })
   }
 
@@ -70,7 +77,7 @@ export class ContactComponent implements OnInit {
       const formData: FormData = new FormData();
       formData.append("photo", photo);
       this.service.uploadPhoto(contact.id, formData).subscribe(response => {
-        this.findAll();
+        this.findAll(this.page, this.size);
       })
     }
   }
@@ -81,5 +88,10 @@ export class ContactComponent implements OnInit {
       height: '450px',
       data: contact
     });
+  }
+
+  pageEvent(event: PageEvent){
+    this.page = event.pageIndex;
+    this.findAll(this.page, this.size);
   }
 }
