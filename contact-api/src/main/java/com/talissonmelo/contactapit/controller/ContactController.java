@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -57,7 +58,8 @@ public class ContactController {
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "size", defaultValue = "10") Integer size) {
 		
-		PageRequest pageRequest = PageRequest.of(page, size);
+		Sort sort = Sort.by(Sort.Direction.ASC,"name");
+		PageRequest pageRequest = PageRequest.of(page, size, sort);
 		return repository.findAll(pageRequest);
 	}
 

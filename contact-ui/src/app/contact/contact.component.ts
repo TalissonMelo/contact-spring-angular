@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog'
 import { ContactDetailsComponent } from '../contact-details/contact-details.component';
 import { PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-contact',
@@ -24,7 +25,8 @@ export class ContactComponent implements OnInit {
 
   constructor(private service: ContactService,
     private formBuilder: FormBuilder,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +44,11 @@ export class ContactComponent implements OnInit {
     this.service.insert(this.form.value).subscribe(response => {
       let list: Contact[] = [... this.contacts, response]
       this.contacts = list;
-      console.log(response)
+      this.snackBar.open('Contato Cadastrado!.', 'Sucesso',{
+        duration: 3000
+      })
+
+      this.form.reset();
     })
   }
 

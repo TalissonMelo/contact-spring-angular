@@ -11,9 +11,8 @@ import {MatTableModule } from '@angular/material/table'
 import {MatIconModule} from '@angular/material/icon'
 import {MatCardModule} from '@angular/material/card'
 import {MatDialogModule} from '@angular/material/dialog'
-import {MatPaginatorModule} from '@angular/material/paginator';
-
-
+import {MatPaginatorModule} from '@angular/material/paginator'
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -40,6 +39,7 @@ import { ContactDetailsComponent } from './contact-details/contact-details.compo
     MatCardModule,
     MatDialogModule,
     MatPaginatorModule,
+    MatSnackBarModule,
 
     BrowserAnimationsModule
   ],
